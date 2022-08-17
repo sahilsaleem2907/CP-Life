@@ -24,7 +24,7 @@ class Solution {
             
         }
        
-        if(count > val)
+        if(count != 0)
             return ini;
         
         return nums[0];
