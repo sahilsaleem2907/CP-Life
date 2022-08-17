@@ -1,25 +1,27 @@
 class Solution {
     public double myPow(double x, int n) {
         
-        if(n == 0 || x == 1.0 || (x == -1 && n < 0))
-            return 1.0;
+        long nn = n;
         
-        double res= 1.0;
-        int upperLimit = Math.abs(n) % 1000000007;
+        double res = 1.0;
         
+        if(nn < 0) nn = Math.abs(nn);
         
-        for(int i = 0 ; i < upperLimit ; i++){
+        while(nn > 0){
             
-            if(n < 0)
-              res /= x;
-            else
-              res *= x;
-        
+            if(nn % 2 == 0)
+            {
+                x =  x * x;
+                nn = nn/2;
+            }
+            else{
+                res = res * x;
+                nn = nn -1;
+            }
             
         }
         
-        if(res == 1)
-            return 0.0;
+        if(n < 0) res = (double) 1 / res;
         
         return res;
         
