@@ -1,46 +1,49 @@
 class Solution {
-    static int merge(int[] nums, int low, int mid, int high) {
-        int cnt = 0;
-        int j = mid + 1; 
-        for(int i = low;i<=mid;i++) {
-            while(j<=high && nums[i] > (2 * (long) nums[j])) {
-                j++;
-            }
-            cnt += (j - (mid+1));
-        }
-        
-        ArrayList<Integer> temp = new ArrayList<>(); 
-        int left = low, right = mid+1; 
-        while(left <= mid && right<=high) {
-            if(nums[left]<=nums[right]) {
-                temp.add(nums[left++]); 
-            }
-            else {
-                temp.add(nums[right++]); 
-            }
-        }
-        
-        while(left<=mid) {
-            temp.add(nums[left++]); 
-        }
-        while(right<=high) {
-            temp.add(nums[right++]); 
-        }
-        
-        for(int i = low; i<=high;i++) {
-            nums[i] = temp.get(i - low); 
-        }
-        return cnt; 
+     public int reversePairs(int[] nums) {
+        int[] temp = new int[nums.length];
+        return mergeSort(nums,0,nums.length-1,temp);
     }
-    static int mergeSort(int[] nums, int low, int high) {
-        if(low>=high) return 0; 
-        int mid = (low + high) / 2;
-        int inv = mergeSort(nums, low, mid); 
-        inv += mergeSort(nums, mid+1, high); 
-        inv += merge(nums, low, mid, high); 
-        return inv; 
+    
+    public int mergeSort(int[] nums, int low, int high, int[] temp) {
+        int count = 0;
+        if(low<high)
+        {
+            int mid = (low+high)/2;
+            count += mergeSort(nums,low,mid,temp);
+            count += mergeSort(nums,mid+1,high,temp);
+            count += merge(nums,low,mid+1,high,temp);
+        }
+        return count;
     }
-   static int reversePairs(int[] nums) {
-        return mergeSort(nums, 0, nums.length - 1); 
+    
+    public int merge(int[] nums, int low, int mid, int high, int[] temp) {
+        int count = 0, x = mid;
+        for(int i=low; i<mid; i++)
+        {
+            while((x<=high) && (nums[i]>2*(long)nums[x]))
+                x++;
+            
+            count += x-mid;
+        }
+        
+        int i = low, j = mid, k = low;
+        while((i<=mid-1) && (j<=high))
+        {
+            if(nums[i]<=nums[j])
+                temp[k++] = nums[i++];
+            else
+                temp[k++] = nums[j++];
+        }
+        
+        while(i<=mid-1)
+            temp[k++] = nums[i++];
+        
+        while(j<=high)
+            temp[k++] = nums[j++];
+        
+        for(i = low; i<=high; i++)
+            nums[i] = temp[i];
+        
+        return count;
     }
 }
