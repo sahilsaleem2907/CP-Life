@@ -36,8 +36,6 @@ class Solution {
                 
             }
             
-            System.out.println(curr.val);
-            
             ListNode fut = curr.next.next;
             curr.next.next = null;
             curr.next = fut;
