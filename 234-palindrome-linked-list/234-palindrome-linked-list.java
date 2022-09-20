@@ -9,37 +9,46 @@
  * }
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        
-        if(head == null) return false;
-        
-        if(head.next == null) return true;
-        
-        ListNode slow  = head, fast = head;
-        
-        Stack<Integer> dp =  new Stack<>();
-        
-        while(fast != null && fast.next != null){
-            
-            dp.push(slow.val);
-            slow = slow.next;
-            fast = fast.next.next;
-            
-        }
-        
-        
-    if(fast != null) dp.push(slow.val);
-                
-        while(!dp.isEmpty() || slow != null){
-            
-            if(slow.val != dp.pop())
-                return false;
-            
-            slow = slow.next;
-            
-        }
-        
-        return true;
-        
+    
+public boolean isPalindrome(ListNode head) {
+    if (head == null || head.next == null)
+      return true;
+    
+    // step 1. cut the original list to two halves
+    ListNode  slow = head, fast = head, l1 = head;
+    
+    while (fast != null && fast.next != null) {
+      // prev = slow;
+      slow = slow.next;
+      fast = fast.next.next;
     }
+    
+    // step 2. reverse the 2nd half
+    ListNode l2 = (fast == null) ? reverse(slow) : reverse(slow.next);
+    
+    // step 3. compare the new two halves
+    while (l1 != null && l2 != null) {
+      if (l1.val != l2.val)
+        return false;
+          
+      l1 = l1.next;
+      l2 = l2.next;
+    }
+    
+    return true;
+  }
+  
+  // helper function: reverse a list
+  ListNode reverse(ListNode head) {
+    ListNode prev = null, curr = head, next = null;
+    
+    while (curr != null) {
+      next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+    
+    return prev;
+  }
 }
