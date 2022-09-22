@@ -14,16 +14,25 @@ public class Solution {
         
         if(head == null) return null;
         
-        HashSet<ListNode> freq = new HashSet<>();
+        ListNode slow= head, fast = head, entry = head;
         
-        while(head != null){
+        while(fast != null && fast.next != null){
             
-            if(!freq.contains(head))
-                freq.add(head);
-            else
-                return head;
             
-            head = head.next;
+            slow = slow.next;
+            fast = fast.next.next;
+            
+            if(slow == fast) {
+                
+                while(slow != entry) {
+                    
+                    slow = slow.next;
+                    entry = entry.next;
+                    
+                }
+                
+                return slow;
+            }
             
         }
         
