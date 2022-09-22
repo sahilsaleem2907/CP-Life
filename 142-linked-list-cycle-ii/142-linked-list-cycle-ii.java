@@ -16,16 +16,14 @@ public class Solution {
         
         HashSet<ListNode> freq = new HashSet<>();
         
-        ListNode curr = head;
-        
-        while(curr != null){
+        while(head != null){
             
-            if(!freq.contains(curr))
-                freq.add(curr);
+            if(!freq.contains(head))
+                freq.add(head);
             else
-                return curr;
+                return head;
             
-            curr = curr.next;
+            head = head.next;
             
         }
         
