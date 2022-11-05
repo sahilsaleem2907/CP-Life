@@ -16,6 +16,7 @@ class Solution {
     }
     return size;
 }
+    
 //      public int lengthOfLIS(int[] nums) {
 //         int n = nums.length;
         
