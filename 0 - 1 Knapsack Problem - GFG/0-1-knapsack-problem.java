@@ -53,38 +53,74 @@ class Solution
     { 
          // your code here 
          int[][] dp = new int[n][W+1];
+        
+         Arrays.stream(dp).forEach(a -> Arrays.fill(a,0));
          
-         Arrays.stream(dp).forEach(a -> Arrays.fill(a,-1));
+         for(int i = wt[0] ; i <= W ; i++) dp[0][i] = val[0];
          
-         return helper(n-1,W,dp,wt,val);
+         for(int i = 1; i < n ; i++){
+             
+             for(int j = 0 ; j <= W ; j++){
+                 
+                  int notTake = 0 + dp[i-1][j];
+        
+                  int take = Integer.MIN_VALUE;
+        
+                  if(wt[i] <= j){
+                  take = val[i] + dp[i-1][j-wt[i]];
+                  }
+        
+         
+               dp[i][j] = Math.max(take,notTake); 
+        
+                 
+             }
+             
+         }
+         
+         
+         
+         return dp[n-1][W];
          
          
     } 
     
-    static int helper(int i, int weight, int[][]dp, int[] wt, int[] val){
-        
-        if(i == 0){
-            if(wt[0] <= weight)
-                return val[0];
-            else
-                return 0;
-        }
-        
-        if(dp[i][weight] != -1) return dp[i][weight];
-        
-        int notTake = 0 + helper(i-1,weight,dp,wt,val);
-        
-        int take = Integer.MIN_VALUE;
-        
-        if(wt[i] <= weight){
-            take = val[i] + helper(i-1,weight-wt[i],dp,wt,val);
-        }
-        
-        
-        return dp[i][weight] = Math.max(take,notTake); 
-        
-        
-    }
 }
 
+// static int knapSack(int W, int wt[], int val[], int n) 
+//     { 
+//          // your code here 
+//          int[][] dp = new int[n][W+1];
+         
+//          Arrays.stream(dp).forEach(a -> Arrays.fill(a,-1));
+         
+//          return helper(n-1,W,dp,wt,val);
+         
+         
+//     } 
+    
+//     static int helper(int i, int weight, int[][]dp, int[] wt, int[] val){
+        
+//         if(i == 0){
+//             if(wt[0] <= weight)
+//                 return val[0];
+//             else
+//                 return 0;
+//         }
+        
+//         if(dp[i][weight] != -1) return dp[i][weight];
+        
+//         int notTake = 0 + helper(i-1,weight,dp,wt,val);
+        
+//         int take = Integer.MIN_VALUE;
+        
+//         if(wt[i] <= weight){
+//             take = val[i] + helper(i-1,weight-wt[i],dp,wt,val);
+//         }
+        
+        
+//         return dp[i][weight] = Math.max(take,notTake); 
+        
+        
+//     }
 
