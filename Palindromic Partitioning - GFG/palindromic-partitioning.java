@@ -55,15 +55,15 @@ class Solution{
     }
     
     static boolean isPalindrome(String string, int i, int j)
-  {
-    while(i < j)
     {
-      if(string.charAt(i) != string.charAt(j))
-        return false; 
-      i++;
-      j--;
+        while(i < j)
+        {
+        if(string.charAt(i) != string.charAt(j))
+            return false; 
+        i++;
+        j--;
+        }
+        return true;
     }
-    return true;
-  }
     
 }
