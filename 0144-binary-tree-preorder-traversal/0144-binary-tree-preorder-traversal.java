@@ -15,23 +15,61 @@
  */
 class Solution {
     
-    List<Integer> res = new ArrayList<>();
+     /* Morris Pre Order*/
     
     public List<Integer> preorderTraversal(TreeNode root) {
         
-        helper(root);
+        List<Integer> res = new ArrayList<>();
+        
+        TreeNode curr = root;
+        
+        while(curr != null){
+            
+            if(curr.left == null){
+                res.add(curr.val);
+                curr = curr.right;
+            }else{
+                
+                TreeNode prev = curr.left;
+                
+                while(prev.right != null && prev.right != curr){
+                    prev = prev.right;                                        
+                }
+                
+                if(prev.right == null){
+                    prev.right = curr;
+                    res.add(curr.val);
+                    curr = curr.left;
+                }else{
+                    prev.right = null;
+                    curr = curr.right;
+                }
+                
+            }
+            
+        }
         
         return res;
         
     }
     
-    public void helper(TreeNode root){
+//     List<Integer> res = new ArrayList<>();
+    
+//     public List<Integer> preorderTraversal(TreeNode root) {
         
-        if(root == null) return;
+//         helper(root);
         
-        res.add(root.val);
-        helper(root.left);
-        helper(root.right);
+//         return res;
         
-    }
+//     }
+    
+//     public void helper(TreeNode root){
+        
+//         if(root == null) return;
+        
+//         res.add(root.val);
+//         helper(root.left);
+//         helper(root.right);
+        
+//     }
 }
